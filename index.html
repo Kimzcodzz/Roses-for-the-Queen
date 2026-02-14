@@ -1,138 +1,98 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>For Shae 🌹</title>
 
 <style>
 body {
   margin: 0;
   height: 100vh;
-  background: radial-gradient(circle at center, #200010, #000000);
-  overflow: hidden;
-  font-family: 'Georgia', serif;
+  background: black;
   display: flex;
   justify-content: center;
   align-items: center;
+  overflow: hidden;
+  font-family: Georgia, serif;
   color: white;
   text-align: center;
 }
 
 /* Button */
-.start-btn {
-  font-size: 22px;
-  padding: 15px 30px;
+#startBtn {
+  font-size: 24px;
+  padding: 15px 40px;
   background: crimson;
   border: none;
+  border-radius: 50px;
   color: white;
   cursor: pointer;
-  border-radius: 50px;
-  transition: transform 0.3s ease;
-  position: relative;
-  z-index: 10;
-}
-
-.start-btn:hover {
-  transform: scale(1.1);
+  z-index: 9999;
 }
 
 /* Message */
-.message {
+#message {
   position: absolute;
+  font-size: 38px;
   max-width: 900px;
-  padding: 20px;
-  font-size: 40px;
   opacity: 0;
   transition: opacity 2s ease;
-  line-height: 1.4;
 }
 
 .name {
-  color: #ff4da6;
-  text-shadow: 0 0 15px #ff4da6, 0 0 30px #ff1493;
+  color: hotpink;
+  font-weight: bold;
 }
 
 /* Roses */
 .rose {
   position: fixed;
   bottom: -120px;
-  font-size: 100px;
-  animation: rise 7s ease-out forwards;
-  pointer-events: none;
-  filter: drop-shadow(0 0 20px red);
+  font-size: 80px;
+  animation: rise 6s linear forwards;
 }
 
 @keyframes rise {
-  0% {
-    transform: translateY(0) scale(1);
-    opacity: 0.9;
-  }
-  100% {
-    transform: translateY(-130vh) scale(1.3);
-    opacity: 0;
-  }
+  from { transform: translateY(0); opacity: 1; }
+  to { transform: translateY(-120vh); opacity: 0; }
 }
 </style>
 </head>
 
 <body>
 
-<button class="start-btn" id="startBtn">Click Me ❤️</button>
+<button id="startBtn">Click Me ❤️</button>
 
-<div class="message" id="message">
-  HAPPY VALENTINE'S DAY <span class="name">SHAE</span> 👑<br><br>
-  YOU AREEEEE THAT WOMAN<br>
-  AND DESERVE EVERY GOOD THING<br>
-  AND MORE FROM THIS LIFETIME ❤️
+<div id="message">
+HAPPY VALENTINE'S DAY <span class="name">SHAE</span> 👑<br><br>
+YOU AREEEEE THAT WOMAN<br>
+AND DESERVE EVERY GOOD THING<br>
+AND MORE FROM THIS LIFETIME ❤️
 </div>
 
-<audio id="music" loop>
-  <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_c8c8a73467.mp3?filename=romantic-piano-110624.mp3" type="audio/mpeg">
-</audio>
-
 <script>
-document.addEventListener("DOMContentLoaded", function () {
+const btn = document.getElementById("startBtn");
+const message = document.getElementById("message");
 
-  const music = document.getElementById("music");
-  const message = document.getElementById("message");
-  const startBtn = document.getElementById("startBtn");
+btn.addEventListener("click", () => {
 
-  startBtn.addEventListener("click", function () {
+  // TEST alert to confirm click works
+  console.log("Button clicked");
 
-    // Hide button smoothly
-    startBtn.style.display = "none";
+  btn.style.display = "none";
+  message.style.opacity = "1";
 
-    // Play music safely
-    music.play().catch(() => {});
-
-    // Reveal message
-    message.style.opacity = 1;
-
-    // First wave of roses
-    for (let i = 0; i < 40; i++) {
-      setTimeout(createRose, i * 120);
-    }
-
-    // Grand finale burst
+  for (let i = 0; i < 50; i++) {
     setTimeout(() => {
-      for (let i = 0; i < 100; i++) {
-        createRose();
-      }
-    }, 4000);
+      const rose = document.createElement("div");
+      rose.className = "rose";
+      rose.innerText = "🌹";
+      rose.style.left = Math.random() * 100 + "vw";
+      document.body.appendChild(rose);
 
-  });
-
-  function createRose() {
-    const rose = document.createElement("div");
-    rose.classList.add("rose");
-    rose.innerText = "🌹";
-    rose.style.left = Math.random() * 100 + "vw";
-    document.body.appendChild(rose);
-
-    setTimeout(() => {
-      rose.remove();
-    }, 7000);
+      setTimeout(() => rose.remove(), 6000);
+    }, i * 100);
   }
 
 });
